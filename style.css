@@ -1,0 +1,15 @@
+body {
+  background-color: pink;
+}
+
+.img-responsive {
+  display: block;
+  margin: auto;
+}
+
+.container {
+  justify-content: center;
+  display: grid;
+  position: relative;
+  margin-top: -500px;
+}
