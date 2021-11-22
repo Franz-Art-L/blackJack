@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="images/default-monochrome-white.svg">
   <title>Ishoboy Black Jack</title>
 </head>
 <body>
@@ -17,22 +18,31 @@
   <div>DEALER: &diams; </div>
   <div>YOU: &hearts;</div>
 
-  <button>New Game</button>
+  <br>
+  <button id="hitButton">HIT</button>
+  <br>
+  <button id="standButton">STAND</button>
 
   <br>
   <br>
-  <div>Money in your pocket: $1000</div>
+  <div id="yourMoney">Money in your pocket: $1000</div>
   <div>Bet:<input type="number" id"pusta" value="100" min"10">
   </div>
   <br>
   <div>Score: </div>
-  <div>Player: </div>
+  <div>You: </div>
   <div>Dealer: </div>
 
+  <br>
+  <br>
+
+  <button>New Game</button>
+  <br>
+  <button onclick="dMode()">Toggle Dark Mode</button>
 </div>
-
-
+<br>
 <footer>
+  <center class="copyright text-muted small" style="padding-top: 100px;">Made by © <a href="https://vigilant-kalam-7aa245.netlify.app/" target="_blank" rel="noopener noreferrer">Francis Artemio Landia</a>. 2021. All Rights Reserved.</center>
   <script src="index.js"></script>
 </footer>
 </body>

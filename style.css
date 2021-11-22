@@ -7,9 +7,28 @@ body {
   margin: auto;
 }
 
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+button {
+  cursor: pointer;
+}
+
 .container {
   justify-content: center;
   display: grid;
   position: relative;
-  margin-top: -500px;
+  margin-top: -600px;
+  font-size: 25px;
+  color: yellow;
+}
+
+hr {
+  max-width: 800px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 2px solid #f44336;
 }
