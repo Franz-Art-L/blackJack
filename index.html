@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,38 +11,57 @@
 <body>
   <div>
   <h1><center>BLACKJACK 🃏</center></h1>
-  <img class="img-responsive" src="images/blackJackTable.jpeg" alt="blackJackTable">
+  
+  <img class="img-responsive" src="images/blackJackTable.jpeg" alt="blackJackTable"> 
 </div>
+
+<br>
+
+<div class="container">
 
 <div id="messageBoard"></div>
 
-<div class="container">
-  <div>DEALER: &diams; </div>
-  <div>YOU: &hearts;</div>
+<button id="newGameButton">New Game</button>
 
-  <br>
+<br>
+
+<table>
+  <tr>
+      <th id="phand">             
+          Your Hand
+      </th>
+      <th id="dhand">
+          Dealer's Hand
+      </th>
+  </tr>
+  <tr>
+      <td class="playerCards" id="pcards">No cards yet</td>
+      <td class="dealerCards" id="dcards">No cards yet</td>
+
+  </tr> 
+</table>
+
+<br>
   <button id="hitButton">HIT</button>
   <br>
   <button id="standButton">STAND</button>
 
   <br>
-  <br>
+  
+  <div class="lowerPart">
   <div id="yourMoney">Money in your pocket: $1000</div>
   <div id="pusta">Bet:<input type="number" id"pusta" value="100" min"10">
   </div>
   <br>
   <div>Score: </div>
-  <div>You: </div>
-  <div>Dealer: </div>
+  <div id="yourScore">You: </div>
+  <div id="dealerScore">Dealer: </div>
+  </div>
 
-  <br>
-  <br>
+<br>
 
-  <button id="newGameButton">New Game</button>
-  <br>
   <button onclick="dMode()">Toggle Dark Mode</button>
 </div>
-<br>
 <footer>
   <center class="copyright text-muted small" style="padding-top: 100px;">Made by © <a href="https://vigilant-kalam-7aa245.netlify.app/" target="_blank" rel="noopener noreferrer">Francis Artemio Landia</a>. 2021. All Rights Reserved.</center>
   <script src="index.js"></script>

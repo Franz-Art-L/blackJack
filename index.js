@@ -3,6 +3,8 @@ function dMode() {
   element.classList.toggle("dark-mode");
 }
 
+var allGlobalVar = {};
+
 var numOfCardsRelease = 0;
 
 var player = {
@@ -53,6 +55,7 @@ function cardsValue(c) {
     return sum;
 }
 
+
 var deck = {
 
   deckArray: [],
@@ -82,18 +85,21 @@ var deck = {
   }
 };
 
+
 deck.initialize();
 deck.shuffle();
 
+
 function bet(outcome) {
-  var playerPusta = document.getElementById('pusta').valueAsNumber;
+  var playerPusta = document.getElementById("pusta").valueAsNumber;
   if(outcome === "win") {
     player.moneyInHand += playerPusta;
-  } else {
-    player.moneyInHand += playerPusta;
   }
-
+  if(outcome === "lost") {
+    player.moneyInHand -= playerPusta;
+  }
 }
+
 
 function resetGame() {
   
@@ -110,10 +116,129 @@ function resetGame() {
 
 }
 
-/*function endGame() {
-  if(player.score === 21) {
-    document.getElementById()
+
+function endGame() {
+  if (player.score === 21) {
+    
+    document.getElementById("messageBoard").innerHTML = "🎉🎊 CONGRATULATIONS! You Got a BLACKJACK cards, YOU WIN!!🎆🙌" + "<br>" + "click New Game if you want to play again.";
+
+    bet("win");
+
+    document.getElementById('yourMoney').innerHTML = "Your money: $" + player.moneyInHand;
+    
+    resetGame();
   }
+
+  if (player.score > 21) {
+    document.getElementById("messageBoard").innerHTML = "😞SORRY Your cards is more than 21, better luck next time LOSER! 🤣" + "<br>" + "click New Game  if you want to play again";
+
+    bet("lose");
+
+    document.getElementById("yourMoney").innerHTML = "Your money: $" + player.moneyInHand;
+
+    resetGame();
+  }
+
+  if (dealer.score === 21) {
+    document.getElementById("messageBoard").innerHTML = "😞SORRY! Computer cards got a BLACKJACK! what a LOSER! 🤣" + "<br>" + "click New Game  if you want to play again";
+
+    bet("lose");
+
+    document.getElementById("yourMoney").innerHTML = "Your money: $" + player.moneyInHand;
+
+    resetGame();
+  }
+
+  if (dealer.score > 21) {
+    document.getElementById("messageBoard").innerHTML = "🎉🎊 CONGRATULATIONS! Computer cards is more than 21, you got lucky!!! HAHA 🤣" + "<br>" + "click New Game  if you want to play again";
+
+    bet("win");
+
+    document.getElementById("yourMoney").innerHTML = "Your money: $" + player.moneyInHand;
+
+    resetGame();
+  }
+
+  if (dealer.score >= 17 && player.score > dealer.score && player.score < 21) {
+    document.getElementById("messageBoard").innerHTML = "🎉🎊 CONGRATULATIONS! Your card is higher than the dealer, you got lucky again!!! HAHA 🤣" + "<br>" + "click New Game  if you want to play again";
+
+    bet("win");
+
+    document.getElementById("yourMoney").innerHTML = "Your money: $" + player.moneyInHand;
+
+    resetGame();
+  }
+
+  if (dealer.score >= 17 && player.score < dealer.score && dealer.score < 21) {
+    document.getElementById("messageBoard").innerHTML = "😞SORRY!! Computer cards is higher than yours!! you're such a LOSER! HAHAHA🤣" + "<br>" + "click New Game  if you want to play again";
+
+    bet("lose");
+
+    document.getElementById("yourMoney").innerHTML = "Your money: $" + player.moneyInHand;
+
+    resetGame();
+  }
+
+  if (dealer.score >= 17 && player.score === dealer.score && player.score < 21) {
+    document.getElementById("messageBoard").innerHTML = "🧑‍🎤Yow! It's a TIE!!! No one wins and no one losses! It's a PUSH!!!🤝 " + "<br>" + "click New Game  if you want to play again";
+
+    resetGame();
+  }
+
+  if (player.moneyInHand === 0) {
+    document.getElementById("newGameButton").disabled = true;
+    document.getElementById("hitButton").disabled = true;
+    document.getElementById("standButton").disabled = true;
+    document.getElementById("messageBoard").innerHTML = "HUHU I'm very sorry my friend😭" + "<br>" + "You ran out of Money!!! HAHAHA 😆🤣 just click the new game if you still want to play and lose again. HAHAHA 😆🤣 PEACE y'all!!! 🥰";
+  }
+
 }
-//To be continued its already late, time to push this one.
-*/
+
+
+function dealerDraw() {
+
+  dealer.cards.push(deck.deckArray)
+  dealer.score = cardsValue(dealer.cards);
+  document.getElementById("dealerCards").innerHTML = "Dealer Cards: " + JSON.stringify(dealer.cards);
+  document.getElementById("dealerScore").innerHTML = "Dealer Score: " + dealer.score;
+  numOfCardsRelease += 1;
+
+}
+
+function newGame() {
+  
+  document.getElementById("newGameButton").disabled = true;
+  document.getElementById("hitButton").disabled = false;
+  document.getElementById("standButton").disabled = false;
+  document.getElementById("message-board").innerHTML = "";
+  hit();
+  hit();
+  dealerDraw();
+  endGame();
+
+}
+
+function hit() {
+  
+  player.cards.push(deck.deckArray[numOfCardsRelease]);
+  player.score = cardsValue(palyer.cards);
+  document.getElementById("yourCards").innerHTML = "Your cards: " + JSON.stringify(player.cards);
+  document.getElementById("yourScore").innerHTML = "Your score: " + player.score;
+  numOfCardsRelease += 1;
+
+  if(numOfCardsRelease > 2) {
+    endGame();
+  }
+
+}
+
+function stand() {
+
+  while (dealer.score < 17) {
+    dealerDraw();
+  }
+  endGame();
+
+}
+
+

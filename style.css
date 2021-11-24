@@ -7,28 +7,47 @@ body {
   margin: auto;
 }
 
+.playerCards {
+  font-size: 17px;
+  padding-left: 31px;
+}
+
+.dealerCards {
+  font-size: 17px;
+  padding-left: 34px;
+}
+
 .dark-mode {
   background-color: black;
   color: white;
+}
+
+.lowerPart {
+  padding-left: 54px;
 }
 
 button {
   cursor: pointer;
 }
 
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 7px;
+    height: 160px;
+    width: 395px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    display: table;
+    padding: 8px 8px 8px 8px;
+}
+
 .container {
   justify-content: center;
   display: grid;
   position: relative;
-  margin-top: -600px;
+  margin-top: -590px;
+  margin-bottom: -43px;
   font-size: 25px;
   color: yellow;
 }
 
-hr {
-  max-width: 800px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 2px solid #f44336;
-}
