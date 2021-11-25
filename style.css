@@ -12,6 +12,16 @@ body {
   padding-left: 31px;
 }
 
+.redcard {
+  color: red;
+    font-weight: bold;   
+}
+
+.blackcard
+{
+    font-weight: bold;      
+}
+
 .dealerCards {
   font-size: 17px;
   padding-left: 34px;

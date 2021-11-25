@@ -3,8 +3,141 @@ function dMode() {
   element.classList.toggle("dark-mode");
 }
 
+//Global variable that will hold all of the variables in our blackJack game web app.
+
 var allGlobalVar = {};
 
+//Store important elements in variables to manipulate later.
+allGlobalVar.messageBoard = document.getElementById('messageBoard');
+allGlobalVar.newGameButton = document.getElementById('newGameButton');
+allGlobalVar.phand = document.getElementById('phand');
+allGlobalVar.dhand = document.getElementById('dhand');
+allGlobalVar.pcards = document.getElementById('pcards');
+allGlobalVar.dcards = document.getElementById('dcards');
+allGlobalVar.hitButton = document.getElementById('hitButton');
+allGlobalVar.standButton = document.getElementById('standButton');
+allGlobalVar.yourMoney = document.getElementById('yourMoney');
+allGlobalVar.pusta = document.getElementById('pusta');
+allGlobalVar.yourScore = document.getElementById('yourScore');
+allGlobalVar.dealerScore = document.getElementById('dealerScore');
+
+//Initialize variables to track them
+allGlobalVar.phand = [];
+allGlobalVar.dhand = [];
+allGlobalVar.deck = [];
+allGlobalVar.suits = ['clubs <span class="bold">&clubs;', 'diamonds <span class="redcard">&diams;', 'hearts <span class="redcard">&hearts;', 'spades <span class="bold">&spades;'];
+allGlobalVar.values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"];
+allGlobalVar.gameStatus = 0; //Flag the game that has not been won.
+allGlobalVar.wins = 0; //Flag the game that has not been won.
+allGlobalVar.draws = 0; //Flag the game that has not been won.
+allGlobalVar.losses = 0; //Flag the game that has not been won.
+allGlobalVar.games = 0; //Flag the game that has not been won.
+
+//Object Constructor for a card.
+class card {
+  constructor(suit, value, name) {
+    this.suit = suit; // string of c/d/h/s
+    this.value = value; // number 1 - 10
+    this.name = name; // string of the full card name
+  }
+};
+
+var newGame = function () {
+  // hide newgame button and show hit/stay buttons
+  allGlobalVar.newGameButton.classList.add("hidden");
+
+  //reset text and variables for newgame
+  allGlobalVar.dcards.innerHTML = "";
+  allGlobalVar.dcards.innerHTML = "";
+  allGlobalVar.phand = [];
+  allGlobalVar.dhand = [];
+  allGlobalVar.gameStatus = 0;
+
+  //New deck is created
+  allGlobalVar.deck = createDeck();
+
+  //Deal two cards to both of the player
+  allGlobalVar.phand.push(allGlobalVar.deck.pop());
+  allGlobalVar.phand.push(allGlobalVar.deck.pop());
+
+  //check if you win that round
+  if (handTotal(allGlobalVar.phand) === 21) {
+    allGlobalVar.wins += 1;
+    allGlobalVar.games += 1;
+    allGlobalVar.gameStatus = 1; //for the dealer's hand to drawn face up
+    drawHands();
+    allGlobalVar.messageBoard.innerHTML = "🎉🎊 CONGRATULATIONS! You Got a BLACKJACK cards, YOU WIN!!🎆🙌";
+    track();
+    allGlobalVar.gameStatus = 2;
+    return;
+  }
+
+  //check if computer won that round
+  if(handTotal(allGlobalVar.dhand) === 21) {
+    allGlobalVar.wins += 1;
+    allGlobalVar.games += 1;
+    allGlobalVar.gameStatus = 1; //for the dealer's hand to drawn face up
+    drawHands();
+    allGlobalVar.messageBoard.innerHTML = "😞SORRY! Computer cards got a BLACKJACK! what a LOSER! 🤣";
+    track();
+    allGlobalVar.gameStatus = 2;
+    return;
+  }
+
+  //Draw both of the hands if neither of them won on the initial deal
+  drawHands();
+  allGlobalVar.messageBoard.innerHTML = "The initial hands are dealt";
+};
+
+/* up to here for now, to be continued tomorroww.
+
+ var createDeck = function () {
+  var deck [];
+  //loop the deck suits and values, building cards and adding them to the deck.
+  for(var a = 0; a < allGlobalVar.suits.length; a++) {
+    for(var b = 0; b < allGlobalVar.values.length; b++) {
+      var cardValue = b + 1;
+        var cardTitle = "";
+          if(cardValue > 10) {
+            cardValue = 10;
+          }
+          if (cardValue != 1) {
+            cardTitle += (allGlobalVar.values(b) + "of" + allGlobalVar.suits[a] + " (" + cardValue + ")");
+          }
+          else {
+            cardTitle += (allGlobalVar[b] + " of " + allGlobalVar.suits[a] + " (" + cardValue + " or 11)");
+          }
+    }
+  }
+
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 var numOfCardsRelease = 0;
 
 var player = {
@@ -240,5 +373,4 @@ function stand() {
   endGame();
 
 }
-
-
+*/
