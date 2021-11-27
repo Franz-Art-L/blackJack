@@ -2,6 +2,22 @@ body {
   background-color: pink;
 }
 
+div.messageBoard {
+  width: 386px;
+  height: 60px;
+  background-color: #eaeaea;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 8px 8px 8px 8px;
+  font-weight: bold;
+  /*font-size: larger;*/
+  margin-top: 20px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
 .img-responsive {
   display: block;
   margin: auto;
@@ -38,12 +54,20 @@ body {
 
 button {
   cursor: pointer;
+  width: 40%;
+    /*background-color: #717171;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 8px 8px 8px 8px;
+    border-radius: 9px;
 }
 
 table {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 7px;
+    margin-bottom: -1px;
+    margin-top: 8px;
     height: 160px;
     width: 395px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -55,7 +79,7 @@ table {
   justify-content: center;
   display: grid;
   position: relative;
-  margin-top: -590px;
+  margin-top: -707px;
   margin-bottom: -43px;
   font-size: 25px;
   color: yellow;
