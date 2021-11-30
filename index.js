@@ -72,12 +72,89 @@ var blackJack = {
 
     //Draw first 4 cards
     blackJack.turn = 0; blackJack.draw(); blackJack.turn = 1; blackJack.draw();
-    blackJack.turn = 1; blackJack.draw(); blackJack.turn = 1; blackJack.draw();
+    blackJack.turn = 0; blackJack.draw(); blackJack.turn = 1; blackJack.draw();
 
     //Check who got the black jack card of 21 on first draw
     blackJack.turn = 0; blackJack.points();
-    blackJack.tuirn = 1; blackJack.points();
+    blackJack.turn = 1; blackJack.points();
     var winner = blackJack.check();
     if (winner==null) { blackJack.turn = 0; }
   },
+
+  //Draw a card from the deck
+  deckSymbols : ["&hearts;", "&diams;", "&clubs;", "&spades;"], //Html symbols for cards
+  deckNum : { 1: "A", 11 : "J", 12: "Q", 13 : "K" }, // Card numbers
+
+  draw : function () {
+    
+    //Take last card from deck + create html
+    var card = blackJack.deck.pop(),
+        cardH = document.createElement('div'),
+        cardV = (blackJack.deckNum[card.n] ?  blackJack[card.n] : card.n) + blackJack.deckSymbols[card.s];
+        cardH.className = "blackJack-card";
+        cardH.innerHTML = cardV;
+
+        // Dealer's Card
+        // NOTE: Hide first dealer card
+        if(blackJack.turn) {
+          if(blackJack.dealer.length == 0) {
+            card.id = "deal-first"
+            cardH.innerHTML = `<div class="back">?</div><div class="front>${cardV}</div>`;
+          }
+          blackJack.dealer.push(card);
+            blackJack.hDealerHand.appendChild(cardH);
+        }
+
+        // Players Card
+        else {
+          blackJack.player.push(card);
+          blackJack.hPlayerHand.appendChild(cardH);
+        }
+  },
+
+  //Calculate and update points
+  points : function () {
+    
+    //Run through cards
+    // Take cards 1-10 at face value + J, Q, K, At 10 points
+    //Don't calculate aces yet, they can either be 1 or 11
+    var aces = 0, points = 0;
+      for (let i of (blackJack.turn ? blackJack.dealer : blackJack.player)) {
+        if(i.n == 1) {
+          aces++;
+        }
+        else if (i.n >= 11 && i.n <= 13) {
+          points += 10;
+        }
+        else {
+          points += i.n;
+        }
+      }
+        // Calculations for aces
+        //Note for multiple aces, we calculate all possible points and take the highest number
+        if (aces!=0) {
+          var minmax = [];
+          for (let elevens = 0; elevens <= aces; elevens++) {
+            let calc = points + (elevens * 11) + (aces - elevens * 1);
+            minimax.push(calc);
+          }
+          points = minimax[0];
+          for (let i of minmax) {
+            if( i > points && i <= 21 ) {
+              points = i;
+            }
+          }
+
+          //Update points
+          if (blackJack.turn) {
+            blackJack.dealerPoints = points;
+          }
+          else {
+            blackJack.playerPoints = points;
+            blackJack.hPlayerPoints.innerHTML = points;
+          }
+    }
+  },
+
 }
+
