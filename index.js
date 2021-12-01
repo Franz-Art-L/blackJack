@@ -156,5 +156,145 @@ var blackJack = {
     }
   },
 
-}
+  //Check for winners and losers
+  check : function () {
+    
+    //flags
+    //winner - 0 for player, 1 for dealer, 2 for tie
+    var winner = null, message = "";
 
+    //check if one or both of the player have Black Jack Cards for the first round:
+    if(blackJack.player.length == 2 && blackJack.dealer.length == 2) {
+      
+      //Tie
+      if(blackJack.playerPoints == 21 && blackJack.dealerPoints == 21) {
+        winner = 2; message = "Wow It's a tie! you and computer have a black jack cards!😆";
+      }
+
+      //Player wins
+      if(blackJack.playerPoints == 21 && blackJack.dealerPoints == null) {
+        winner = 0; message = "CONGRATULATIONS!!!🎆🍾 you just got a BlackJack!!! You Win!!! 🎉🥳";
+      }
+
+      //Dealer wins
+      if(blackJack.playerPoints == null && blackJack.dealerPoints == 21) {
+        winner = 1; message = "SORRY!!! 😢 The Dealer got a Black Jack, 😭 YOU LOSE!!!! 😿";
+      }
+    }
+
+    //Who gone bust, which player has more than 21 points in their hand
+    if(winner == null) {
+
+      //Dealer wins
+      if(blackJack.playerPoints > 21) {
+        winner = 1; message = "YOU GOT BUST! 😆 SORRY!! DEALER WINS!!! 🤣";
+      }
+
+      //Player wins 
+      if(blackJack.dealerPoints > 21) {
+        winner = 0; message = "Hey you got lucky my friend! 😉, Dealer is Bust! YOU WIN!!!🎇🎉🥳";
+      }
+
+      //TIE
+      else {
+        winner = 2; message = "Guess what, both of you and computer got bust! so It's TIE!!! 😉😃";
+      }
+    }
+
+    //Check if we already have a winner
+    if(winner != null) {
+
+      //show dealer hand and score
+      blackJack.hDealerHand.innerHTML = blackJack.dealerPoints;
+      document.getElementById("deal-first").classList.add('show');
+
+      //Reset interface
+      blackJack.hPlayerControls.remove('started');
+
+      //and the choosen winner
+      alert(message);
+    }
+      return winner;
+  },
+
+  //Hit new card, hit function
+  hit : function () {
+
+    //Draw new card
+    blackJack.draw(); blackJack.points();
+
+    //auto-stand on 21 points
+    if(blackJack.turn == 0 && blackJack.playerPoints == 21 && !blackJack.playerStand) {
+      blackJack.playerStand = true; blackJack.hPlayerStand.classList.add('stood');
+    }
+    if(blackJack.turn == 1 && blackJack.dealerPoints == 21 && !blackJack.dealerStand) {
+      blackJack.dealerStand = true; blackJack.hDealerStand.classList.add('stood');
+    }
+
+    //Continue if still no winner
+    var winner = blackJack.check();
+    if(winner == null) {
+      blackJack.next();
+    }
+
+  },
+
+  //Stand function
+  stand : function () {
+
+    //set stand status
+    if(blackJack.turn) {
+      blackJack.dealerStand = true; blackJack.hDealerStand.classList.add("stood");
+    } else {
+      blackJack.playerStand = true; blackJack.hPlayerStand.classList.add('stood');
+    }
+
+    //Decide to end game or keep going?
+    var winner = (blackJack.playerStand && blackJack.dealerStand) ? blackJack.check() : null;
+    if(winner == null) {
+      blackJack.next();
+    }
+  },
+
+  //Next function, to determine whats going to happen next
+  next : function () {
+
+    //up next...
+    blackJack.turn = blackJack.turn == 0 ? 1 : 0;
+
+    //Dealer is next
+    if(blackJack.turn == 1) {
+      if(blackJack.dealerStand) {
+        blackJack.turn = 0;
+      } //Skip dealer turn if stood
+     else {
+      blackJack.aiBotDecision();
+    }
+  }
+
+  //Player is next
+  else {
+    if(blackJack.playerStand) {
+       blackJack.turn = 1; blackJack.aiBotDecision();
+      } //Skip player turn if stood
+    }
+  },
+
+  //Ai bot function
+  aiBotDecision : function () {
+    if (blackJack.turn) {
+      
+      // stand on safety limit
+      if(blackJack.dealerPoints >= blackJack.safety) {
+         blackJack.stand()
+      }
+
+      //or else draw another card
+      else {
+        blackJack.hit();
+      }
+    }
+  }
+};
+
+window.addEventListener("DOMContentLoaded", blackJack.init);
