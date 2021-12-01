@@ -22,13 +22,13 @@ var blackJack = {
   playerPoints : 0, // tplayer current points
   safety : 17, // computer will stand on or past this point
   dealerStand : false, // dealer stood
-  playerStand : false , // player stood
+  playerStand : false, // player stood
   turn : 0, // check if whos turn already 0 for player, 1 for dealer(computer)
   
   //Initialize game
   init : function () {
     //Get Html Elements
-    blackJack.hDealerHand = document.getElementById('dealer-stand');
+    blackJack.hDealerStand = document.getElementById('dealer-stand');
     blackJack.hDealerPoints = document.getElementById('dealer-points');
     blackJack.hDealerHand = document.getElementById('dcards');
     blackJack.hPlayerStand = document.getElementById('player-stand');
@@ -39,7 +39,7 @@ var blackJack = {
     //Attach onclick events
     document.getElementById('playerStart').addEventListener('click', blackJack.start);
     document.getElementById('playerHit').addEventListener('click', blackJack.hit);
-    document.getElementById('playerstand').addEventListener('click', blackJack.stand);
+    document.getElementById('playerStand').addEventListener('click', blackJack.stand);
   },
 
   //Start new game
@@ -47,7 +47,7 @@ var blackJack = {
     //Reset points, hands, deck, turn and html
     blackJack.deck = []; blackJack.dealer = []; blackJack.player = [];
     blackJack.dealerPoints = 0; blackJack.playerPoints = 0;
-    blackJack.dealerStand = false; blackJack.hPlayerStand = false;
+    blackJack.dealerStand = false; blackJack.playerStand = false;
     blackJack.hDealerPoints.innerHTML = "?"; blackJack.hPlayerPoints.innerHTML = 0;
     blackJack.hDealerHand.innerHTML = ""; blackJack.hPlayerHand.innerHTML = "";
     blackJack.hDealerStand.classList.remove("stood");
@@ -58,7 +58,7 @@ var blackJack = {
     // S: SHAPE (0 = HEART, 1 = DIAMOND, 2 = CLUB, 3 = SPADE)
     // N: NUMBER (1 = ACE, 2 TO 10 = AS-IT-IS, 11 = JACK, 12 = QUEEN, 13 = KING)
     for (let i=0; i<4; i++) { for (let j=1; j<14; j++) {
-      bj.deck.push({s : i, n : j});
+      blackJack.deck.push({s : i, n : j});
     }}
 
     // CREDITS:
@@ -78,7 +78,9 @@ var blackJack = {
     blackJack.turn = 0; blackJack.points();
     blackJack.turn = 1; blackJack.points();
     var winner = blackJack.check();
-    if (winner==null) { blackJack.turn = 0; }
+    if (winner==null) { 
+      blackJack.turn = 0; 
+    }
   },
 
   //Draw a card from the deck
@@ -90,7 +92,7 @@ var blackJack = {
     //Take last card from deck + create html
     var card = blackJack.deck.pop(),
         cardH = document.createElement('div'),
-        cardV = (blackJack.deckNum[card.n] ?  blackJack[card.n] : card.n) + blackJack.deckSymbols[card.s];
+        cardV = (blackJack.deckNum[card.n] ?  blackJack.deckNum[card.n] : card.n) + blackJack.deckSymbols[card.s];
         cardH.className = "blackJack-card";
         cardH.innerHTML = cardV;
 
@@ -98,8 +100,8 @@ var blackJack = {
         // NOTE: Hide first dealer card
         if(blackJack.turn) {
           if(blackJack.dealer.length == 0) {
-            card.id = "deal-first"
-            cardH.innerHTML = `<div class="back">?</div><div class="front>${cardV}</div>`;
+            cardH.id = "deal-first"
+            cardH.innerHTML = `<div class="back">?</div><div class="front">${cardV}</div>`;
           }
           blackJack.dealer.push(card);
             blackJack.hDealerHand.appendChild(cardH);
@@ -136,15 +138,16 @@ var blackJack = {
           var minmax = [];
           for (let elevens = 0; elevens <= aces; elevens++) {
             let calc = points + (elevens * 11) + (aces - elevens * 1);
-            minimax.push(calc);
+            minmax.push(calc);
           }
-          points = minimax[0];
+          points = minmax[0];
           for (let i of minmax) {
             if( i > points && i <= 21 ) {
               points = i;
             }
           }
 
+      }
           //Update points
           if (blackJack.turn) {
             blackJack.dealerPoints = points;
@@ -153,7 +156,7 @@ var blackJack = {
             blackJack.playerPoints = points;
             blackJack.hPlayerPoints.innerHTML = points;
           }
-    }
+    
   },
 
   //Check for winners and losers
@@ -172,12 +175,12 @@ var blackJack = {
       }
 
       //Player wins
-      if(blackJack.playerPoints == 21 && blackJack.dealerPoints == null) {
+      if(winner == null && blackJack.playerPoints == 21) {
         winner = 0; message = "CONGRATULATIONS!!!🎆🍾 you just got a BlackJack!!! You Win!!! 🎉🥳";
       }
 
       //Dealer wins
-      if(blackJack.playerPoints == null && blackJack.dealerPoints == 21) {
+      if(winner == null && blackJack.dealerPoints == 21) {
         winner = 1; message = "SORRY!!! 😢 The Dealer got a Black Jack, 😭 YOU LOSE!!!! 😿";
       }
     }
@@ -185,31 +188,40 @@ var blackJack = {
     //Who gone bust, which player has more than 21 points in their hand
     if(winner == null) {
 
-      //Dealer wins
+      //player bust
       if(blackJack.playerPoints > 21) {
         winner = 1; message = "YOU GOT BUST! 😆 SORRY!! DEALER WINS!!! 🤣";
       }
 
-      //Player wins 
+      //dealer bust 
       if(blackJack.dealerPoints > 21) {
         winner = 0; message = "Hey you got lucky my friend! 😉, Dealer is Bust! YOU WIN!!!🎇🎉🥳";
       }
-
-      //TIE
-      else {
-        winner = 2; message = "Guess what, both of you and computer got bust! so It's TIE!!! 😉😃";
-      }
     }
-
+      // points check when both player stand
+      if (winner == null && blackJack.dealerStand && blackJack.playerStand) {
+        // DEALER HAS MORE POINTS
+        if (blackJack.dealerPoints > blackJack.playerPoints) {
+          winner = 1; message = "I'M SORRY MY FRIEND!😢 YOU LOSE!!! 🤣 Dealer wins with " + blackJack.dealerPoints + " points!";
+        }
+        // PLAYER HAS MORE POINTS
+        else if (blackJack.dealerPoints < blackJack.playerPoints) {
+          winner = 0; message = "CONGRATULATIONS!🎇🎉🥳  You WON! with " + blackJack.playerPoints + " points!";
+        }
+        // TIE
+        else {
+          winner = 2; message = "Oh cmon!!! Its a TIE!!!😕";
+        }
+      }
     //Check if we already have a winner
     if(winner != null) {
 
       //show dealer hand and score
-      blackJack.hDealerHand.innerHTML = blackJack.dealerPoints;
-      document.getElementById("deal-first").classList.add('show');
+      blackJack.hDealerPoints.innerHTML = blackJack.dealerPoints;
+      document.getElementById("deal-first").classList.add("show");
 
       //Reset interface
-      blackJack.hPlayerControls.remove('started');
+      blackJack.hPlayerControls.classList.remove("started");
 
       //and the choosen winner
       alert(message);
@@ -286,15 +298,14 @@ var blackJack = {
       
       // stand on safety limit
       if(blackJack.dealerPoints >= blackJack.safety) {
-         blackJack.stand()
+         blackJack.stand();
       }
 
       //or else draw another card
       else {
         blackJack.hit();
+        }
       }
     }
-  }
-};
-
+  };
 window.addEventListener("DOMContentLoaded", blackJack.init);
