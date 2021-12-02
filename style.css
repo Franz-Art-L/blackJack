@@ -1,5 +1,5 @@
 body {
-  background-color: pink;
+  background-color: #8000806b;;
 }
 
 .img-responsive {
@@ -12,14 +12,29 @@ body {
   padding-left: 39px;
 }
 
-.redcard {
+#myAudio {
+  font-size: small;
+}
+
+.redCard {
   color: red;
     font-weight: bold;   
 }
 
-.blackcard {
-    font-weight: bold;      
+.bold {
+    font-weight: bold;
+    color: black;      
 }
+
+.audioPlayer {
+  margin: 155px;
+    padding: 0px;
+    padding-left: 640px;
+}
+
+#deal-first .front { display: none; }
+#deal-first.show .back { display: none; }
+#deal-first.show .front { display: block; }
 
 .dealerCards {
   font-size: 17px;
@@ -100,10 +115,6 @@ table {
 #playerControl.started {
   display: flex;
 }
-
-/*#playerControl.started, #playerStart {
-  display: none;
-}*/
 
 #playerControl.started, #playerHit, #playerControl.started, #playerStand {
   display: inline-block;

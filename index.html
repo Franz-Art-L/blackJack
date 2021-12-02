@@ -58,8 +58,18 @@
 
   <button class="toogleDarkMode"onclick="dMode()">Toggle Dark Mode</button>
 </div>
+
+<div class="audioPlayer">
+<audio src="audio/ishoboyeditedbeat1.mp3" id="myAudio" controls></audio>
+</div>
+<script>
+  document.getElementById('playerStart').addEventListener("click", function() {
+    document.getElementById("myAudio").play();
+    }
+  );
+    </script>
 <footer>
-  <center style="padding-top: 300px;">Made by <a href="https://vigilant-kalam-7aa245.netlify.app/" target="_blank" rel="noopener noreferrer">Francis Artemio Landia</a>. 2021.</center>
+  <center style="padding-top: 1px;">Made by <a href="https://vigilant-kalam-7aa245.netlify.app/" target="_blank" rel="noopener noreferrer">Francis Artemio Landia</a>. 2021.</center>
 </footer>
 </body>
 </html>

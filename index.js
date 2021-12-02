@@ -84,8 +84,8 @@ var blackJack = {
   },
 
   //Draw a card from the deck
-  deckSymbols : ["&hearts;", "&diams;", "&clubs;", "&spades;"], //Html symbols for cards
-  deckNum : { 1: "A", 11 : "J", 12: "Q", 13 : "K" }, // Card numbers
+  deckSymbols : [' <span class="redCard">&#9829</span>', ' <span class="redCard">&#9830</span>', ' <span class="bold">&#9827</span>', ' <span class="bold">&#9824</span>'], //Html symbols for cards
+  deckNum : { 1: "ACE of", 11 : "JACK of", 12: "QUEEN of", 13 : "KING of" }, // Card numbers
 
   draw : function () {
     
