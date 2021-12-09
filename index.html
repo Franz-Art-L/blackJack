@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,45 +8,47 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="icon" href="images/default-monochrome-white.svg">
   <title>Ishoboy Black Jack</title>
-  <script src="index.js"></script>
 </head>
+
 <body>
   <div>
-  <h1><center>BLACKJACK 🃏</center></h1>
-  <img class="img-responsive" src="images/blackJackTable.jpeg" alt="blackJackTable">
-</div>
-<br>
+    <h1>
+      <center>BLACKJACK 🃏</center>
+    </h1>
+    <img class="img-responsive" src="images/blackJackTable.jpeg" alt="blackJackTable">
+  </div>
+  <br>
 
-<div class="container">
+  <div class="container">
 
-<table>
-  <tr>
-      <th id="phand">
-        <div id="player-data">
-        <span id="player-stand">STAND</span>          
-          Your Hand - <span id="player-points">0</span>
-      </th>
-    </div>
+    <table>
+      <tr>
+        <th id="phand">
+          <div id="player-data">
+            <span id="player-stand">STAND</span>
+            Your Hand - <span id="player-points">0</span>
+        </th>
+  </div>
 
-      <div id="dealer-data">
-      <th id="dhand"style="padding-right: 12px;"> <span id="dealer-stand">STAND</span>
-          Dealer's Hand - <span id="dealer-points">?</span>
-      </th>
-    </div>
+  <div id="dealer-data">
+    <th id="dhand" style="padding-right: 12px;"> <span id="dealer-stand">STAND</span>
+      Dealer's Hand - <span id="dealer-points">?</span>
+    </th>
+  </div>
   </tr>
   <tr>
-      <td class="playerCards"id="pcards">No cards yet</td>
-      <td class="dealerCards"id="dcards">No cards yet</td>
+    <td class="playerCards" id="pcards">No cards yet</td>
+    <td class="dealerCards" id="dcards">No cards yet</td>
 
-  </tr> 
-</table>
+  </tr>
+  </table>
 
-<br>
+  <br>
   <div class="hitAndStandBtn">
     <div id="playerControl">
-  <input type="button" id="playerStart" value="PLAY / New Game"/>
-  <input type="button" id="playerHit" value="HIT"/>
-  <input type="button" id="playerStand" value="STAND"/>
+      <input type="button" id="playerStart" value="PLAY / New Game" />
+      <input type="button" id="playerHit" value="HIT" />
+      <input type="button" id="playerStand" value="STAND" />
     </div>
   </div>
   <!--<div class="lowerPart">
@@ -54,22 +57,25 @@
   </div>
   <br>
 -->
-<br>
+  <br>
 
-  <button class="toogleDarkMode"onclick="dMode()">Toggle Dark Mode</button>
-</div>
+  <button class="toogleDarkMode" onclick="dMode()">Toggle Dark Mode</button>
+  </div>
 
-<div class="audioPlayer">
-<audio src="audio/ishoboyeditedbeat1.mp3" id="myAudio" controls></audio>
-</div>
-<script>
-  document.getElementById('playerStart').addEventListener("click", function() {
-    document.getElementById("myAudio").play();
+  <div class="audioPlayer">
+    <audio src="audio/ishoboyeditedbeat1.mp3" id="myAudio" controls></audio>
+  </div>
+  <script>
+    document.getElementById('playerStart').addEventListener("click", function () {
+      document.getElementById("myAudio").play();
     }
-  );
-    </script>
-<footer>
-  <center style="padding-top: 1px;">Made by <a href="https://confident-murdock-8e5bba.netlify.app/" target="_blank" rel="noopener noreferrer">Francis Artemio Landia</a>. 2021.</center>
-</footer>
+    );
+  </script>
+  <footer>
+    <center style="padding-top: 1px;">Made by <a href="https://confident-murdock-8e5bba.netlify.app/" target="_blank"
+        rel="noopener noreferrer">Francis Artemio Landia</a>. 2021.</center>
+    <script src="index.js"></script>
+  </footer>
 </body>
+
 </html>
