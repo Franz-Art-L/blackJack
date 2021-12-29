@@ -310,4 +310,5 @@ var blackJack = {
     }
   }
 };
+
 window.addEventListener("DOMContentLoaded", blackJack.init);
